@@ -17,3 +17,18 @@ func (mq *MessageQueue) Enqueue(msg Message) {
 	defer mq.mutex.Unlock()
 	mq.queue = append(mq.queue, msg)
 }
+
+func (mq *MessageQueue) Dequeue() (Message, bool) {
+	// remove a message from the queue if it can be removed
+	// else return a empty message and return false
+	mq.mutext.Lock()
+	defer mq.mutex.Unlock()
+
+	if len(mq.queue) == 0 {
+		return Message{}, false
+	}
+	msg := mq.queue[0]
+	//slice off the item and rebase the queue
+	mq.queue = mq.queue[1:]
+	return msg, true
+}
