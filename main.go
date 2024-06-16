@@ -21,7 +21,7 @@ func (mq *MessageQueue) Enqueue(msg Message) {
 func (mq *MessageQueue) Dequeue() (Message, bool) {
 	// remove a message from the queue if it can be removed
 	// else return a empty message and return false
-	mq.mutext.Lock()
+	mq.mutex.Lock()
 	defer mq.mutex.Unlock()
 
 	if len(mq.queue) == 0 {
