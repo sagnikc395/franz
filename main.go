@@ -1,5 +1,19 @@
 package main
 
-// in memory storage for now, later shift to postgres ? 
+import "sync"
 
-//server (http,tcp)
+type Message struct {
+	Data string
+}
+
+type MessageQueue struct {
+	queue []Message
+	mutex sync.Mutex
+}
+
+func (mq *MessageQueue) Enqueue(msg Message) {
+	//add a item to the message queue
+	mq.mutex.Lock()
+	defer mq.mutex.Unlock()
+	mq.queue = append(mq.queue, msg)
+}
