@@ -4,6 +4,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/sagnikc395/franz/pkg/storage"
 	"github.com/sagnikc395/franz/pkg/types"
 )
@@ -56,4 +57,24 @@ func (b *Broker) CreateTopic(name string, retention time.Duration, maxSize int) 
 		Messages:      make([]types.Message, 0),
 	}
 	return nil
+}
+
+//sub on a given topic
+
+func (b *Broker) Subscribe(topic string, bufferSize int) (*Subscriber, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+
+	if _, exists := b.topics[topic]; !exists {
+		return nil, TopicNotFoundErr
+	}
+
+	sub := &Subscriber{
+		ID:      uuid.New().String(),
+		Topic:   topic,
+		Channel: make(chan types.Message, bufferSize),
+	}
+
+	b.subscribers[topic] = append(b.subscribers[topic], sub)
+	return sub, nil
 }
