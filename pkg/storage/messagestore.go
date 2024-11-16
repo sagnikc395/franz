@@ -17,6 +17,11 @@ type InMemoryStore struct {
 	mu       sync.RWMutex
 }
 
+// GetRange implements MessageStore.
+func (s *InMemoryStore) GetRange(topic string, from uint64, to uint64) ([]types.Message, error) {
+	panic("unimplemented")
+}
+
 // constructor for new memory store
 func NewInMemoryStore() *InMemoryStore {
 	return &InMemoryStore{
