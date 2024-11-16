@@ -4,14 +4,15 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagnikc395/franz/pkg/storage"
 	"github.com/sagnikc395/franz/pkg/types"
 )
 
 type Broker struct {
 	topics        map[string]*Topic
-	subscribers   map[string][]*Subscribers
+	subscribers   map[string][]*Subscriber
 	mu            sync.RWMutex
-	messageStrore MessageStore
+	messageStrore storage.MessageStore
 }
 
 type Topic struct {
