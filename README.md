@@ -1,6 +1,6 @@
 ## franz 
 
-<img src="./social/franz-kafka.jpeg" height="200px" width="200px">
+<img src="./public/franz-kafka.jpeg" height="200px" width="200px">
 
 a beginner's write of a distributed message queue .
 
