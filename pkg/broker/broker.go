@@ -29,3 +29,5 @@ type Subscriber struct {
 	Channel  chan types.Message
 	Position uint64
 }
+
+//constructor for new broker
