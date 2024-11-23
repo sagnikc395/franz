@@ -4,6 +4,11 @@
 
 a beginner's write of a distributed message queue .
 
+### Build:
+```go
+make 
+```
+
 ### Properties:
 
 1. delivering atleast once
