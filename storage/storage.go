@@ -36,6 +36,10 @@ func (s *MemoryStore) Push(b []byte) (int, error) {
 func (s *MemoryStore) Fetch(offset int) ([]byte, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
+
+	if offset < 0 {
+		return nil, fmt.Errorf("offset cannot be smaller than 0")
+	}
 	if len(s.data) < offset {
 		return nil, fmt.Errorf("offset (%d) too high", offset)
 	}
