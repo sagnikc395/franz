@@ -16,6 +16,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = s.Store.Fetch(-1)
-	fmt.Println(err)
+	offset, _ := s.Store.Push([]byte("foobar"))
+	data, err := s.Store.Fetch(offset)
+	fmt.Println(string(data))
 }

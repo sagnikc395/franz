@@ -10,7 +10,6 @@ import (
 func TestStorage(t *testing.T) {
 	s := storage.NewMemoryStore()
 	for i := 0; i < 100; i++ {
-
 		key := fmt.Sprintf("foobarbaz_%d", i)
 		offset, err := s.Push([]byte(key))
 		if err != nil {
