@@ -1,15 +1,19 @@
 package storage
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type Storer interface {
 	// store arbitary data and it will return an error
 	Push([]byte) (int, error)
 	// fetch data from an certain offset; return error if out of bounds
-	Fetch(uint) ([]byte, error)
+	Fetch(int) ([]byte, error)
 }
 
 type MemoryStore struct {
+	mu   sync.RWMutex
 	data [][]byte
 }
 
@@ -22,15 +26,19 @@ func NewMemoryStore() *MemoryStore {
 
 // push method
 func (s *MemoryStore) Push(b []byte) (int, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	s.data = append(s.data, b)
-	return len(s.data), nil
+	return len(s.data) - 1, nil
 }
 
 // fetch method
-func (s *MemoryStore) Fetch(offset uint) ([]byte, error) {
-	if uint(len(s.data)) < offset || offset == 0 {
+func (s *MemoryStore) Fetch(offset int) ([]byte, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	if len(s.data) < offset {
 		return nil, fmt.Errorf("offset (%d) too high", offset)
 	}
 
-	return s.data[offset-1], nil
+	return s.data[offset], nil
 }
