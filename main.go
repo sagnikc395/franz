@@ -18,5 +18,8 @@ func main() {
 	}
 	offset, _ := s.Store.Push([]byte("foobar"))
 	data, err := s.Store.Fetch(offset)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println(string(data))
 }
