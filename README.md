@@ -27,6 +27,7 @@ making a distributed event streaming platform from scratch in Python.
   
 ### Flow and main architecture
 
+```
 franz/
 ├── broker.py        # Manages topics, partitions, and persistence
 ├── producer.py      # Client that sends messages to the broker
@@ -35,3 +36,4 @@ franz/
 ├── storage.py       # Append-only file-based log
 ├── server.py        # Starts broker and handles socket clients
 └── client_utils.py  # Shared socket protocol helpers
+```
